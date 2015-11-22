@@ -6,6 +6,17 @@ var UserSchema = new mongoose.Schema({
         type: String
     },
     password: String,
+    /*
+     * 0 normal
+     * 1 verified
+     * 2 vip
+     * >10 admin
+     * >50 super admin
+     */
+    role: {
+        type: Number,
+        default: 0
+    },
     meta: {
         createAt: {
             type: Date,
@@ -52,5 +63,7 @@ UserSchema.statics = {
             .exec(cb);
     }
 };
+
+
 
 module.exports = UserSchema;

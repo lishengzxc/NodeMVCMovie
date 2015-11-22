@@ -8,6 +8,7 @@ block content
                   th _id
                   th name
                   th password
+                  th role
                   th create
                   th update
             tbody
@@ -16,5 +17,6 @@ block content
                      td #{item._id}
                      td #{item.name}
                      td #{item.password}
+                     td #{item.role}
                      td #{moment(item.meta.createAt).format('MM/DD/YYYY')}
                      td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
