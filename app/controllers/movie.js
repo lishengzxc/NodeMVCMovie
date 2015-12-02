@@ -12,7 +12,6 @@ exports.detail = function (req, res) {
       .populate('from', 'name')
       .populate('reply.from reply.to')
       .exec(function (err, comments) {
-        console.log(comments);
         res.render('detail', {
           title: '详情页',
           movie: movie,

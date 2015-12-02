@@ -1,0 +1,22 @@
+extends ../layout
+block content
+    .container
+        .row
+            table.table.table-hover.table-bordered
+                thead
+                    tr
+                        th _id
+                        th name
+                        th password
+                        th role
+                        th create
+                        th update
+                tbody
+                    each item in categories
+                        tr(class="item-id-#{item._id}")
+                            td #{item._id}
+                            td #{item.name}
+                            td #{item.password}
+                            td #{item.role}
+                            td #{moment(item.meta.createAt).format('MM/DD/YYYY')}
+                            td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
