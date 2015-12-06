@@ -1,6 +1,6 @@
 var Movie = require('../models/movie');
 var Comment = require('../models/comment');
-
+var Category = require('../models/category');
 var _ = require('underscore');
 
 
@@ -23,19 +23,14 @@ exports.detail = function (req, res) {
 };
 
 exports.admin = function (req, res) {
-  res.render('admin', {
-    title: '后台录入页',
-    movie: {
-      title: '',
-      doctor: '',
-      country: '',
-      year: '',
-      poster: '',
-      flash: '',
-      summary: '',
-      language: ''
-    }
+  Category.find({}, function (err, categories) {
+    res.render('admin', {
+      title: '后台录入页',
+      categories: categories,
+      movie: {}
+    });
   });
+
 };
 
 exports.update = function (req, res) {
@@ -74,12 +69,20 @@ exports.save = function (req, res) {
       year: _movie.year,
       poster: _movie.poster,
       summary: _movie.summary,
-      flash: _movie.flash
+      flash: _movie.flash,
+      category: _movie.category
     });
+
+    var categoryId = __movie.category;
 
     __movie.save(function (err, movie) {
       if (err) console.log(err);
-      res.redirect('/movie/' + movie._id);
+      Category.findOne({_id: categoryId}, function (err, category) {
+        category.movies.push(movie._id);
+        category.save(function (err) {
+          res.redirect('/movie/' + movie._id);
+        });
+      });
     });
   }
 };
